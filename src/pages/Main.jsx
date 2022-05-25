@@ -90,7 +90,7 @@ export default function Main() {
           </UnorderedList>
         </Box>
       ) : null}
-      {selectedDivPoint ? (
+      {selectedDivPoint !== "" ? (
         <Text> Selected Divergence Point: {selectedDivPoint}</Text>
       ) : null}
     </Box>
