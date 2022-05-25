@@ -33,6 +33,7 @@ export default function Main() {
   }, [selectedProject]);
 
   useEffect(() => {
+    setSelectedDivPoint("");
     async function fetchData() {
       setIsLoading(true);
       try {
