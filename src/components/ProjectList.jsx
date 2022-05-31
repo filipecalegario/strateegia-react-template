@@ -20,7 +20,11 @@ export default function ProjectList({ handleSelectChange }) {
   }, []);
 
   return (
-    <Select placeholder="escolha o projeto" onChange={handleSelectChange}>
+    <Select 
+      placeholder="escolha o projeto" 
+      onChange={handleSelectChange}
+      borderRadius={'6px 0 0 6px'}
+    >
       {projectList.map(lab => {
         return lab.projects.map(project => {
           return (
