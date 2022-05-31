@@ -1,4 +1,4 @@
-import { Box, Heading, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import { Box, Heading, Link, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import * as api from "strateegia-api";
 import Loading from "../components/Loading";
@@ -13,9 +13,20 @@ export default function Main() {
   const [isLoading, setIsLoading] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const [mapDetails, setMapDetails] = useState(null);
+  const [firstMap, setFirstMap] = useState(null);
 
   const handleSelectChange = (e) => {
     setSelectedProject(e.target.value);
+    async function fetchMapList() {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const project = await api.getProjectById(accessToken, e.target.value);
+        setFirstMap(project.maps[0].id);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchMapList();
   };
 
   const handleMapSelectChange = (e) => {
@@ -39,7 +50,6 @@ export default function Main() {
       try {
         const response = await api.getMapById(accessToken, selectedMap);
         setMapDetails({ ...response });
-        console.log("mapDetails: %o", mapDetails);
         // [TODO] - use the access token to fetch the data
         // [TODO] - add the fetch data function here
       } catch (error) {
@@ -54,12 +64,26 @@ export default function Main() {
     setAccessToken(localStorage.getItem("accessToken"));
   }, []);
 
+  console.log(selectedProject+ ' , ' + firstMap);
+
   return (
     <Box padding={10}>
-      <Heading as="h3" size="md" mb={3}>
-        [applet title here]
-      </Heading>
-      <ProjectList handleSelectChange={handleSelectChange} />
+      <Box display='flex' >
+        <ProjectList handleSelectChange={handleSelectChange} />
+        <Link 
+          href={`https://app.strateegia.digital/journey/${selectedProject}/map/${firstMap}`}
+          target='_blank'
+          bg='#E9ECEF'
+          borderRadius={' 0 6px 6px 0 '}
+          fontSize={16}
+          w={200} h='40px'
+          display='flex'
+          alignItems='center'
+          justifyContent='center'
+        >
+          link para a jornada
+        </Link>
+      </Box>
       <MapList
         projectId={selectedProject}
         handleSelectChange={handleMapSelectChange}
@@ -69,6 +93,9 @@ export default function Main() {
         handleSelectChange={handleDivPointSelectChange}
       />
       <Loading active={isLoading} />
+      <Heading as="h3" size="md" mb={3}>
+        [applet title here]
+      </Heading>
       {/* [TODO] Add you component here */}
       {mapDetails?.points ? (
         <Box mt={3}>
