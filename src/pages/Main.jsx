@@ -1,4 +1,11 @@
-import { Box, Heading, Link, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import * as api from "strateegia-api";
 import Loading from "../components/Loading";
@@ -19,7 +26,7 @@ export default function Main() {
     setSelectedProject(e.target.value);
     async function fetchMapList() {
       try {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem("accessToken");
         const project = await api.getProjectById(accessToken, e.target.value);
         setFirstMap(project.maps[0].id);
       } catch (error) {
@@ -64,22 +71,23 @@ export default function Main() {
     setAccessToken(localStorage.getItem("accessToken"));
   }, []);
 
-  console.log(selectedProject+ ' , ' + firstMap);
+  console.log(selectedProject + " , " + firstMap);
 
   return (
     <Box padding={10}>
-      <Box display='flex' >
+      <Box display="flex">
         <ProjectList handleSelectChange={handleSelectChange} />
-        <Link 
+        <Link
           href={`https://app.strateegia.digital/journey/${selectedProject}/map/${firstMap}`}
-          target='_blank'
-          bg='#E9ECEF'
-          borderRadius={' 0 6px 6px 0 '}
+          target="_blank"
+          bg="#E9ECEF"
+          borderRadius={" 0 6px 6px 0 "}
           fontSize={16}
-          w={200} h='40px'
-          display='flex'
-          alignItems='center'
-          justifyContent='center'
+          w={200}
+          h="40px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
         >
           link para a jornada
         </Link>
