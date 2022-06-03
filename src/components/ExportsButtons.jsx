@@ -1,7 +1,8 @@
 import { Button, Box } from "@chakra-ui/react";
 import { CSVLink } from "react-csv";
+import { ButtonExp } from "./ButtonToExport";
 
-export function ExportsButtons({ checkpointAndComments }) {
+export function ExportsButtons({ checkpointAndComments, project, saveFile }) {
   
   const headers = [
     {
@@ -53,42 +54,15 @@ export function ExportsButtons({ checkpointAndComments }) {
 
   return (
     <Box display="flex" justifyContent="flex-end">
+      <ButtonExp click={saveFile} project={project} text='docx'/>
       <CSVLink
         data={checkpointCommentsCSV}
         headers={headers}
         filename="strateegia_conversation_points_report-csv.csv"
       >
-        <Button
-          size="xs"
-          fontSize="14px"
-          fontWeight="400"
-          bg="#6c757d"
-          color="#fff"
-          borderRadius="3px"
-          _hover={{
-            bg: "#5C636A",
-          }}
-          paddingBottom={"4px"}
-        >
-          csv
-        </Button>
+        <ButtonExp click={null} project={project} text='csv'/>
       </CSVLink>
-      <Button
-        m="2px"
-        size="xs"
-        fontSize="14px"
-        fontWeight="400"
-        bg="#6c757d"
-        color="#fff"
-        borderRadius="3px"
-        _hover={{
-          bg: "#5C636A",
-        }}
-        paddingBottom={"4px"}
-        onClick={() => exportJSONData(checkpointCommentsCSV)}
-      >
-        json
-      </Button>
+      <ButtonExp click={() => exportJSONData(checkpointCommentsCSV)} project={project} text='json'/>
     </Box>
   );
 }

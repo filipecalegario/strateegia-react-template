@@ -93,7 +93,7 @@ export default function Main() {
         handleSelectChange={handleDivPointSelectChange}
       />
       <Loading active={isLoading} />
-      <Heading as="h3" size="md" mb={3}>
+      <Heading as="h3" size="md" mb={3} mt={3}>
         [applet title here]
       </Heading>
       {/* [TODO] Add you component here */}
